@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     system("CHCP 1252");
-cout << "hur gammal är du?" << endl;
+cout << "hur gammal Ã¤r du?" << endl;
 
   string s_heltal;
 
@@ -35,29 +35,3 @@ cout << "hur gammal är du?" << endl;
 
  return 0;
 }
-
-
-
-
-
-
-   /* char alder;
-    cin >> alder;
-    int c = (int)alder;
-    if (alder < 60 || alder > 71)
-    {
-        cout << "Skriv ett nummer, testa igen" << endl;
-    }
-
-int alder;
-cin >> alder;
-    if ((alder > 65) || (alder < 12)) {
-            cout <<"Det blir 20 kr att betala" << endl;
-       }
-    else {
-            cout << "Det blir 30 kr att betala" << endl;
-         }
-    return 0;
-
-}
-*/
