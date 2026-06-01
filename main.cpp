@@ -19,9 +19,6 @@ bool isValidIntegerString(const string& value) {
   }
 
   for (size_t i = 0; i < value.size(); ++i) {
-    if (i == 0 && (value[i] == '-' || value[i] == '+')) {
-      continue;
-    }
     if (value[i] < '0' || value[i] > '9') {
       return false;
     }
