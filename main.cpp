@@ -1,37 +1,82 @@
 #include <iostream>
-
-#include <string.h>
+#include <string>
+#include <windows.h>
 
 using namespace std;
 
-int main()
-{
-    system("CHCP 1252");
-cout << "hur gammal är du?" << endl;
+struct PricingConfig {
+  int childMaxAge = 11;
+  int seniorMinAge = 66;
+  int discountPrice = 20;
+  int normalPrice = 30;
+  string prompt = "Hur gammal är du?";
+  string invalidInput = "Felaktig inmatning";
+  string discountMessage = "Det blir 20 kr att betala";
+  string normalMessage = "Det blir 30 kr att betala";
+};
 
-  string s_heltal;
+bool isValidIntegerString(const string& value) {
+  if (value.empty()) {
+    return false;
+  }
 
-  cin >> s_heltal;
-  for (int i=0; i<s_heltal.size(); i++) {
-
-    if(s_heltal[i] == '-') {
-        i = i * -1;
+  for (size_t i = 0; i < value.size(); ++i) {
+    if (i == 0 && (value[i] == '-' || value[i] == '+')) {
+      continue;
     }
-    if(s_heltal[i] < '0' || s_heltal[i] > '9') {
-        cout << "Felaktig inmatning" << endl;
-        return 0;
+    if (value[i] < '0' || value[i] > '9') {
+      return false;
     }
   }
 
-    char *c_string = new char [s_heltal.length()+1];
-    strcpy(c_string, s_heltal.c_str());
-    int heltal = atoi(c_string);
-     if ((heltal > 65) || (heltal < 12)) {
-            cout <<"Det blir 20 kr att betala" << endl;
-       }
-    else {
-            cout << "Det blir 30 kr att betala" << endl;
-         }
+  return true;
+}
+
+bool tryParseNonNegativeInt(const string& value, int& result) {
+  size_t pos = 0;
+  try {
+    result = stoi(value, &pos);
+  } catch (...) {
+    return false;
+  }
+
+  if (pos != value.size() || result < 0) {
+    return false;
+  }
+
+  return true;
+}
+
+int calculatePrice(int age, const PricingConfig& config) {
+  if (age <= config.childMaxAge || age >= config.seniorMinAge) {
+    return config.discountPrice;
+  }
+  return config.normalPrice;
+}
+
+int main() {
+
+  SetConsoleOutputCP(CP_UTF8);
+  SetConsoleCP(CP_UTF8);
+
+  PricingConfig config;
+  cout << config.prompt << endl;
+
+  string s_heltal; 
+  cin >> s_heltal;
+
+  int heltal = 0;
+  if (!isValidIntegerString(s_heltal) || !tryParseNonNegativeInt(s_heltal, heltal)) {
+    cout << config.invalidInput << endl;
+    return 0;
+  }
+
+  int price = calculatePrice(heltal, config);
+  if (price == config.discountPrice) {
+    cout << config.discountMessage << endl;
+  } else {
+    cout << config.normalMessage << endl;
+  }
 
  return 0;
 }
