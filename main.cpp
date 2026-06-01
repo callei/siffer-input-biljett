@@ -11,8 +11,6 @@ struct PricingConfig {
   int normalPrice = 30;
   string prompt = "Hur gammal är du?";
   string invalidInput = "Felaktig inmatning";
-  string discountMessage = "Det blir 20 kr att betala";
-  string normalMessage = "Det blir 30 kr att betala";
 };
 
 bool isValidIntegerString(const string& value) {
@@ -72,11 +70,7 @@ int main() {
   }
 
   int price = calculatePrice(heltal, config);
-  if (price == config.discountPrice) {
-    cout << config.discountMessage << endl;
-  } else {
-    cout << config.normalMessage << endl;
-  }
+  cout << "Det blir " << price << " kr att betala" << endl;
 
  return 0;
 }
